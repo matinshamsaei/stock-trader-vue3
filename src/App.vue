@@ -1,10 +1,10 @@
 <script setup>
 import { RouterView } from "vue-router";
 import AppHeader from "./components/AppHeader.vue";
-import { stocks } from "@/stores/stocks";
+// import { stocks } from "@/stores/stocks";
 
-const stocksStore = stocks();
-stocksStore.initStock();
+// const stocksStore = stocks();
+// stocksStore.initStock();
 </script>
 
 <template>
@@ -14,9 +14,12 @@ stocksStore.initStock();
 
       <div class="row">
         <div class="px-4 pt-3 pb-5">
-          <transition name="slide" mode="out-in">
-            <router-view></router-view>
-          </transition>
+          <!-- <router-view v-slot="{ Component }"> -->
+          <!-- <transition name="slide" mode="out-in"> -->
+          <!-- <component :is="Component" /> -->
+          <!-- </transition> -->
+          <!-- </router-view> -->
+          <router-view></router-view>
         </div>
       </div>
     </div>

@@ -27,34 +27,34 @@ export const portfolio = defineStore("portfolio", {
     },
   },
   actions: {
-    buyStock(state, { stockId, stockPrice, stockQuantity }) {
-      const record = state.stocks.find((element) => element.id === stockId);
+    buyStock({ stockId, stockPrice, stockQuantity }) {
+      const record = this.stocks.find((element) => element.id === stockId);
       if (record) {
         record.quantity += stockQuantity;
       } else {
-        state.stocks.push({
+        this.stocks.push({
           id: stockId,
           quantity: stockQuantity,
         });
       }
 
-      state.funds -= stockPrice * stockQuantity;
+      this.funds -= stockPrice * stockQuantity;
     },
 
-    sellStock(state, { stockId, stockPrice, stockQuantity }) {
-      const record = state.stocks.find((element) => element.id === stockId);
+    sellStock({ stockId, stockPrice, stockQuantity }) {
+      const record = this.stocks.find((element) => element.id === stockId);
       if (record.quantity > stockQuantity) {
         record.quantity -= stockQuantity;
       } else {
-        state.stocks.splice(state.stocks.indexOf(record), 1);
+        this.stocks.splice(this.stocks.indexOf(record), 1);
       }
 
-      state.funds += stockPrice * stockQuantity;
+      this.funds += stockPrice * stockQuantity;
     },
 
-    setPortfolio(state, portfolio) {
-      state.funds = portfolio.funds;
-      state.stocks = portfolio.stockPortfolio;
+    setPortfolio(portfolio) {
+      this.funds = portfolio.funds;
+      this.stocks = portfolio.stockPortfolio;
     },
 
     sellStocks(order) {

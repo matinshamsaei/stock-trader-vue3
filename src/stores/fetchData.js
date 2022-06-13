@@ -1,13 +1,13 @@
 import axios from "axios";
 import { defineStore } from "pinia";
-import { stocks } from "./stocks";
-import { portfolio } from "./portfolio";
+// import { stocks } from "./stocks";
+// import { portfolio } from "./portfolio";
 
 export const fetchData = defineStore("fetchData", {
   actions: {
     fetchDat() {
-      const stocksStore = stocks();
-      const portfolioStore = portfolio();
+      // const stocksStore = stocks();
+      // const portfolioStore = portfolio();
 
       axios
         .get("https://stock-trade-eb949.firebaseio.com/data.json")
@@ -23,8 +23,8 @@ export const fetchData = defineStore("fetchData", {
               funds,
             };
 
-            stocksStore["Set-Stocks"](stocksData);
-            portfolioStore["Set-Portfolio"](portfolioData);
+            // stocksStore["Set-Stocks"](stocksData);
+            // portfolioStore["Set-Portfolio"](portfolioData);
           }
         });
     },

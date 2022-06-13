@@ -1,4 +1,5 @@
 <script setup>
+import axios from "axios";
 import { computed } from "vue";
 import { RouterLink } from "vue-router";
 import { portfolio } from "@/stores/portfolio";
@@ -22,7 +23,7 @@ function saveData() {
     stocks: stocksStore.stocks,
     funds: portfolioStore.funds,
   };
-  this.$http.put("data.json", data);
+  axios.put("https://stock-trade-eb949.firebaseio.com/data.json", data);
 }
 function loadData() {
   fetchDataStore.fetchData();

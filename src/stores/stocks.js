@@ -1,8 +1,8 @@
 import { defineStore } from "pinia";
 import dataStocks from "../data/stocks";
-import { portfolio } from "./portfolio";
+// import { portfolio } from "./portfolio";
 
-const portfolioStore = portfolio();
+// const portfolioStore = portfolio();
 
 export const stocks = defineStore("stocks", {
   state: () => {
@@ -16,12 +16,12 @@ export const stocks = defineStore("stocks", {
     },
   },
   actions: {
-    setStocks(state, stocks) {
-      state.stocks = stocks;
+    setStocks(stocks) {
+      this.stocks = stocks;
     },
 
-    rndStocks(state) {
-      state.stocks.forEach((element) => {
+    rndStocks() {
+      this.stocks.forEach((element) => {
         element.price = Math.floor(element.price * (1 + Math.random() - 0.5));
       });
     },
@@ -32,8 +32,8 @@ export const stocks = defineStore("stocks", {
     randomizeStock() {
       this.rndStocks();
     },
-    buyStocks(order) {
-      portfolioStore.buyStock(order);
-    },
+    // buyStocks(order) {
+    //   portfolioStore.buyStock(order);
+    // },
   },
 });

@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from "vue";
-import StockItem from "./Stock";
+import StockItem from "./StockItem.vue";
 import { stocks } from "@/stores/stocks";
 
 const stocksStore = stocks();
