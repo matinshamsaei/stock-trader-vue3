@@ -1,7 +1,7 @@
 <script setup>
 import { RouterView } from "vue-router";
-import AppHeader from "./components/Header";
-import { stocks } from "./stocks";
+import AppHeader from "./components/AppHeader.vue";
+import { stocks } from "@/stores/stocks";
 
 const stocksStore = stocks();
 stocksStore.initStock();

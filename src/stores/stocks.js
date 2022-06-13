@@ -1,5 +1,8 @@
 import { defineStore } from "pinia";
-import dataStocks from "../../data/stocks";
+import dataStocks from "../data/stocks";
+import { portfolio } from "./portfolio";
+
+const portfolioStore = portfolio();
 
 export const stocks = defineStore("stocks", {
   state: () => {
@@ -13,24 +16,24 @@ export const stocks = defineStore("stocks", {
     },
   },
   actions: {
-    "Set-Stocks"(state, stocks) {
+    setStocks(state, stocks) {
       state.stocks = stocks;
     },
 
-    "Rnd-Stocks"(state) {
+    rndStocks(state) {
       state.stocks.forEach((element) => {
         element.price = Math.floor(element.price * (1 + Math.random() - 0.5));
       });
     },
 
-    initStock({ commit }) {
-      commit("Set-Stocks", dataStocks);
+    initStock() {
+      this.setStocks(dataStocks);
     },
-    randomizeStock({ commit }) {
-      commit("Rnd-Stocks");
+    randomizeStock() {
+      this.rndStocks();
     },
-    buyStocks({ commit }, order) {
-      commit("BUY_STOCK", order);
+    buyStocks(order) {
+      portfolioStore.buyStock(order);
     },
   },
 });

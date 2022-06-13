@@ -1,4 +1,4 @@
-import Vue from "vue";
+import axios from "axios";
 import { defineStore } from "pinia";
 import { stocks } from "./stocks";
 import { portfolio } from "./portfolio";
@@ -9,22 +9,22 @@ export const fetchData = defineStore("fetchData", {
       const stocksStore = stocks();
       const portfolioStore = portfolio();
 
-      Vue.http
-        .get("data.json")
+      axios
+        .get("https://stock-trade-eb949.firebaseio.com/data.json")
         .then((response) => response.json())
         .then((data) => {
           if (data) {
             const stockPortfolio = data.portfolio;
-            const stocks = data.stocks;
+            const stocksData = data.stocks;
             const funds = data.funds;
 
-            const portfolio = {
+            const portfolioData = {
               stockPortfolio,
               funds,
             };
 
-            stocksStore["Set-Stocks"](stocks);
-            portfolioStore["Set-Portfolio"](portfolio);
+            stocksStore["Set-Stocks"](stocksData);
+            portfolioStore["Set-Portfolio"](portfolioData);
           }
         });
     },
