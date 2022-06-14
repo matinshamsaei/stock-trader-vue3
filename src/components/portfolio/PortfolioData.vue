@@ -9,5 +9,7 @@ const stocks = computed(() => portfolioStore.stockPortfolio);
 </script>
 
 <template>
-  <portfolio-stock v-for="stock in stocks" :key="stock.id" :stock="stock" />
+  <div>
+    <portfolio-stock v-for="stock in stocks" :key="stock.id" :stock="stock" />
+  </div>
 </template>

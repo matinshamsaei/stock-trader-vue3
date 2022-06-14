@@ -9,5 +9,7 @@ const stocksList = computed(() => stocksStore.stocksList);
 </script>
 
 <template>
-  <stock-item v-for="stock in stocksList" :key="stock.id" :stock="stock" />
+  <div>
+    <stock-item v-for="stock in stocksList" :key="stock.id" :stock="stock" />
+  </div>
 </template>

@@ -14,12 +14,11 @@ stocksStore.initStock();
 
       <div class="row">
         <div class="px-4 pt-3 pb-5">
-          <!-- <router-view v-slot="{ Component }">
+          <router-view v-slot="{ Component }">
             <transition name="slide" mode="out-in">
               <component :is="Component" />
             </transition>
-          </router-view> -->
-          <router-view></router-view>
+          </router-view>
         </div>
       </div>
     </div>
