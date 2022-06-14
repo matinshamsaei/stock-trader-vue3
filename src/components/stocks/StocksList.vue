@@ -1,13 +1,11 @@
 <script setup>
 import { computed } from "vue";
 import StockItem from "./StockItem.vue";
-import { stocks } from "@/stores/stocks";
+import { useStocksStore } from "@/stores/stocks";
 
-const stocksStore = stocks();
+const stocksStore = useStocksStore();
 
-const stocksList = computed(() => {
-  return stocksStore.stocks;
-});
+const stocksList = computed(() => stocksStore.stocksList);
 </script>
 
 <template>

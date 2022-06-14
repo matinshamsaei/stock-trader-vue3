@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
+import { useStocksStore } from "./stocks";
 
-export const portfolio = defineStore("portfolio", {
+export const usePortfolioStore = defineStore("portfolio", {
   state: () => {
     return {
       funds: 10000,
@@ -8,9 +9,11 @@ export const portfolio = defineStore("portfolio", {
     };
   },
   getters: {
-    stockPortfolio(state, getters) {
+    stockPortfolio(state) {
+      const stocksStore = useStocksStore();
+
       return state.stocks.map((stock) => {
-        const record = getters.stocks.find(
+        const record = stocksStore.stocksList.find(
           (element) => element.id === stock.id
         );
         return {
@@ -22,8 +25,8 @@ export const portfolio = defineStore("portfolio", {
       });
     },
 
-    funds(state) {
-      return state.funds;
+    fundsAmount() {
+      return this.funds;
     },
   },
   actions: {

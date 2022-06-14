@@ -1,24 +1,24 @@
 <script setup>
-import { computed, defineProps } from "vue";
-import { portfolio } from "@/stores/portfolio";
+import { computed, defineProps, ref } from "vue";
+import { usePortfolioStore } from "@/stores/portfolio";
 
-const portfolioStore = portfolio();
-let quantity = 0;
+const portfolioStore = usePortfolioStore();
+let quantity = ref("");
 
 const stock = defineProps(["stock"]);
 
 const sellStockCrime = computed(() => {
-  return quantity > stock.quantity;
+  return quantity.value > stock.stock.quantity;
 });
 
 function sellStock() {
   const order = {
-    stockId: stock.id,
-    stockPrice: stock.price,
-    stockQuantity: quantity,
+    stockId: stock.stock.id,
+    stockPrice: stock.stock.price,
+    stockQuantity: quantity.value,
   };
   portfolioStore.sellStocks(order);
-  quantity = 0;
+  quantity.value = 0;
 }
 </script>
 
@@ -26,9 +26,9 @@ function sellStock() {
   <div class="col-sm-6 col-md-4">
     <div class="panel panel-info">
       <div class="panel-heading">
-        {{ stock.name }}
+        {{ stock.stock.name }}
         <small class="pull-right">
-          Price: {{ stock.price }} | Quantity: {{ stock.quantity }}
+          Price: {{ stock.stock.price }} | Quantity: {{ stock.stock.quantity }}
         </small>
       </div>
 
@@ -49,7 +49,7 @@ function sellStock() {
             :class="{ 'btn-danger': sellStockCrime }"
             @click="sellStock"
             :disabled="
-              sellStockCrime || quantity <= 0 || Number.isInteger(quantity)
+              sellStockCrime || quantity <= 0 || !Number.isInteger(quantity)
             "
           >
             {{ sellStockCrime ? "Not Enough" : "Sell" }}

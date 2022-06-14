@@ -2,17 +2,15 @@
 import axios from "axios";
 import { computed } from "vue";
 import { RouterLink } from "vue-router";
-import { portfolio } from "@/stores/portfolio";
-import { stocks } from "@/stores/stocks";
+import { usePortfolioStore } from "@/stores/portfolio";
+import { useStocksStore } from "@/stores/stocks";
 import { fetchData } from "@/stores/fetchData";
 
-const portfolioStore = portfolio();
-const stocksStore = stocks();
+const portfolioStore = usePortfolioStore();
+const stocksStore = useStocksStore();
 const fetchDataStore = fetchData();
 
-const funds = computed(() => {
-  return portfolioStore.funds;
-});
+const funds = computed(() => portfolioStore.fundsAmount);
 
 function endDay() {
   stocksStore.randomizeStock();
@@ -20,8 +18,8 @@ function endDay() {
 function saveData() {
   const data = {
     portfolio: portfolioStore.stockPortfolio,
-    stocks: stocksStore.stocks,
-    funds: portfolioStore.funds,
+    stocks: stocksStore.stocksList,
+    funds: portfolioStore.fundsAmount,
   };
   axios.put("https://stock-trade-eb949.firebaseio.com/data.json", data);
 }
@@ -83,7 +81,7 @@ function loadData() {
 
         <li class="nav-item">
           <a class="nav-link" href="#" @click="endDay">
-            End Day<span class="sr-only">(current) </span>
+            End Day<span class="sr-only">(current)</span>
           </a>
         </li>
       </ul>

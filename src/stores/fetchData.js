@@ -1,18 +1,15 @@
 import axios from "axios";
 import { defineStore } from "pinia";
-// import { stocks } from "./stocks";
-// import { portfolio } from "./portfolio";
+import { useStocksStore } from "./stocks";
+import { usePortfolioStore } from "./portfolio";
 
 export const fetchData = defineStore("fetchData", {
   actions: {
-    fetchDat() {
-      // const stocksStore = stocks();
-      // const portfolioStore = portfolio();
-
+    fetchData() {
       axios
         .get("https://stock-trade-eb949.firebaseio.com/data.json")
-        .then((response) => response.json())
-        .then((data) => {
+        .then((res) => {
+          const data = res.data;
           if (data) {
             const stockPortfolio = data.portfolio;
             const stocksData = data.stocks;
@@ -23,10 +20,16 @@ export const fetchData = defineStore("fetchData", {
               funds,
             };
 
-            // stocksStore["Set-Stocks"](stocksData);
-            // portfolioStore["Set-Portfolio"](portfolioData);
+            this.setStoresData(stocksData, portfolioData);
           }
         });
+    },
+    setStoresData(stocksData, portfolioData) {
+      const stocksStore = useStocksStore();
+      const portfolioStore = usePortfolioStore();
+
+      stocksStore.setStocks(stocksData);
+      portfolioStore.setPortfolio(portfolioData);
     },
   },
 });

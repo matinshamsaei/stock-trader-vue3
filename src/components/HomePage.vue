@@ -1,11 +1,9 @@
 <script setup>
 import { computed } from "vue";
-import { portfolio } from "@/stores/portfolio";
+import { usePortfolioStore } from "@/stores/portfolio";
 
-const portfolioStore = portfolio();
-const funds = computed(() => {
-  return portfolioStore.funds;
-});
+const portfolioStore = usePortfolioStore();
+const funds = computed(() => portfolioStore.fundsAmount);
 </script>
 
 <template>

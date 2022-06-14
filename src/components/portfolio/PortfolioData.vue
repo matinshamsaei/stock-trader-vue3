@@ -1,13 +1,11 @@
 <script setup>
 import { computed } from "vue";
 import PortfolioStock from "./PortfolioStock.vue";
-import { portfolio } from "@/stores/portfolio";
+import { usePortfolioStore } from "@/stores/portfolio";
 
-const portfolioStore = portfolio();
+const portfolioStore = usePortfolioStore();
 
-const stocks = computed(() => {
-  return portfolioStore.stockPortfolio;
-});
+const stocks = computed(() => portfolioStore.stockPortfolio);
 </script>
 
 <template>

@@ -1,27 +1,27 @@
 <script setup>
-import { computed, defineProps } from "vue";
-import { portfolio } from "@/stores/portfolio";
+import { computed, defineProps, ref } from "vue";
+import { usePortfolioStore } from "@/stores/portfolio";
+import { useStocksStore } from "@/stores/stocks";
 
-const portfolioStore = portfolio();
-let quantity = 0;
+const portfolioStore = usePortfolioStore();
+const stocksStore = useStocksStore();
+let quantity = ref("");
 
 const stock = defineProps(["stock"]);
 
-const funds = computed(() => {
-  return portfolioStore.funds;
-});
-const buyStockCrime = computed(() => {
-  return quantity * stock.price > funds.value;
-});
+const funds = computed(() => portfolioStore.fundsAmount);
+const buyStockCrime = computed(
+  () => quantity.value * stock.price > funds.value
+);
 
 function buyStock() {
   const order = {
-    stockId: stock.id,
-    stockPrice: stock.price,
-    stockQuantity: quantity,
+    stockId: stock.stock.id,
+    stockPrice: stock.stock.price,
+    stockQuantity: quantity.value,
   };
-  this.$store.dispatch("buyStocks", order);
-  quantity = 0;
+  stocksStore.buyStocks(order);
+  quantity.value = 0;
 }
 </script>
 
@@ -29,8 +29,8 @@ function buyStock() {
   <div class="col-sm-6 col-md-4">
     <div class="panel panel-success">
       <div class="panel-heading">
-        {{ stock.name }}
-        <small class="pull-right">{{ stock.price }}</small>
+        {{ stock.stock.name }}
+        <small class="pull-right">{{ stock.stock.price }}</small>
       </div>
 
       <div class="panel-body">
@@ -50,7 +50,7 @@ function buyStock() {
             :class="{ 'btn-danger': buyStockCrime }"
             @click="buyStock"
             :disabled="
-              buyStockCrime || quantity <= 0 || Number.isInteger(quantity)
+              buyStockCrime || quantity <= 0 || !Number.isInteger(quantity)
             "
           >
             {{ buyStockCrime ? "Insufficients Funds" : "Buy" }}
