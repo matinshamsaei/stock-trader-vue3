@@ -1,5 +1,5 @@
 <script setup>
-import { computed, defineProps, ref } from "vue";
+import { computed, ref } from "vue";
 import { usePortfolioStore } from "@/stores/portfolio";
 import { useStocksStore } from "@/stores/stocks";
 
@@ -7,17 +7,17 @@ const portfolioStore = usePortfolioStore();
 const stocksStore = useStocksStore();
 let quantity = ref("");
 
-const stock = defineProps(["stock"]);
+const props = defineProps(["stock"]);
 
 const funds = computed(() => portfolioStore.fundsAmount);
 const buyStockCrime = computed(
-  () => quantity.value * stock.price > funds.value
+  () => quantity.value * props.stock.price > funds.value
 );
 
 function buyStock() {
   const order = {
-    stockId: stock.stock.id,
-    stockPrice: stock.stock.price,
+    stockId: props.stock.id,
+    stockPrice: props.stock.price,
     stockQuantity: quantity.value,
   };
   stocksStore.buyStocks(order);
@@ -29,8 +29,8 @@ function buyStock() {
   <div class="col-sm-6 col-md-4">
     <div class="panel panel-success">
       <div class="panel-heading">
-        {{ stock.stock.name }}
-        <small class="pull-right">{{ stock.stock.price }}</small>
+        {{ props.stock.name }}
+        <small class="pull-right">{{ props.stock.price }}</small>
       </div>
 
       <div class="panel-body">
