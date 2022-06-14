@@ -5,16 +5,16 @@ import { usePortfolioStore } from "@/stores/portfolio";
 const portfolioStore = usePortfolioStore();
 let quantity = ref("");
 
-const stock = defineProps(["stock"]);
+const props = defineProps(["stock"]);
 
 const sellStockCrime = computed(() => {
-  return quantity.value > stock.stock.quantity;
+  return quantity.value > props.stock.quantity;
 });
 
 function sellStock() {
   const order = {
-    stockId: stock.stock.id,
-    stockPrice: stock.stock.price,
+    stockId: props.stock.id,
+    stockPrice: props.stock.price,
     stockQuantity: quantity.value,
   };
   portfolioStore.sellStocks(order);
@@ -26,9 +26,9 @@ function sellStock() {
   <div class="col-sm-6 col-md-4">
     <div class="panel panel-info">
       <div class="panel-heading">
-        {{ stock.stock.name }}
+        {{ props.stock.name }}
         <small class="pull-right">
-          Price: {{ stock.stock.price }} | Quantity: {{ stock.stock.quantity }}
+          Price: {{ props.stock.price }} | Quantity: {{ props.stock.quantity }}
         </small>
       </div>
 
